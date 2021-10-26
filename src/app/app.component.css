@@ -1,0 +1,57 @@
+table {
+    width: 100%;
+}
+
+table th {
+    text-align: center;
+    word-wrap:break-word;
+}
+
+table td{
+   text-align: center;
+   word-wrap:break-word;
+}
+
+#containerCredit{
+    margin-top: 50px;
+    margin-bottom: 50px;
+    width: 60%;
+}
+
+
+#containerTableCredit{
+   overflow: hidden;
+}
+
+button{
+    margin: 5px;
+}
+
+#titleCredit{
+    background-color: #106cc8;
+    color: white;
+    padding: 10px;
+}
+
+.content-card{
+    width: 50%;
+}
+
+mat-form-field{
+    width: 100%;
+}
+
+.button-properties{
+    width: 70%;
+}
+
+
+.container-alert{
+    text-align: center;
+    margin: 15px;
+}
+
+.alert-invalid{
+    color: red;
+    font-size: 15px;
+}
