@@ -337,17 +337,10 @@
       <form [formGroup]="formCredit">
         <div fxLayout="column">
           <div fxLayoutAlign="center center" class="container-alert">
-            <a *ngIf="invalidForm" class="alert-invalid">
-              Los campos marcados son obligatorios
-            </a>
-            <a *ngIf="errorForm" class="alert-invalid">
-              Los campos tienen errores, por favor vilide.
-            </a>
-            <a *ngIf="errorForm" class="alert-valid">
-              {{validFormText}}
+            <a *ngIf="alert" [ngClass]="{'alert-invalid': errorAlert(), 'alert-valid': !errorAlert()}">
+              {{alertTest}}
             </a>
           </div>
-
           <div fxLayoutAlign="center center">
             <mat-form-field appearance="legacy" class="agregar-ancho">
               <mat-label>Nombre</mat-label>

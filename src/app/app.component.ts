@@ -20,9 +20,12 @@ export class AppComponent implements OnInit {
   @ViewChild(MatPaginator) paginador!: MatPaginator;
   @ViewChild(MatSort) ordenar!: MatSort;
   formCredit: FormGroup;
-  invalidForm: boolean = false;
-  errorForm: boolean = false;
-  validFormText: string = "";
+  alert: boolean = false;
+  typeAlerts = {
+    invalid:"Los campos marcados son obligatorios.",
+    error:"Los campos tienen errores, por favor vilide."
+  }
+  alertTest:string = '';
   idCredit: number = 0;
 
   constructor(protected creditService: CreditService, private formBuilder: FormBuilder) {
@@ -58,21 +61,20 @@ export class AppComponent implements OnInit {
   save() {
     if (this.validateform()) {
       if (this.validateOnlyNumbers()) {
-        this.invalidForm = false;
         const dataToSend: CreditInterface = this.prepareShippingData();
         this.creditService.save(dataToSend).subscribe(respuesta => {
-          this.invalidForm = false;
-          this.errorForm = false;
-          console.log(respuesta);
+          this.timerAlerText(respuesta['200']);
           this.cleanform();
           this.listData();
         }, error => {
-          console.log(error);
+          this.timerAlerText(error['400']);
         }
         );
+      }else{
+        this.timerAlerText(this.typeAlerts.error);
       }
     } else {
-      this.invalidForm = true;
+     this.timerAlerText(this.typeAlerts.invalid);
       this.cleanform();
     }
   }
@@ -84,11 +86,13 @@ export class AppComponent implements OnInit {
 
   // Metodo encargado de validar si los campos numericos tienen caracteres especiales
   validateOnlyNumbers(): boolean {
-    const valoresAceptados = /^[0-9]+$/;
-    if (this.formCredit.get('amount')?.value.match(valoresAceptados) == null ||
-      this.formCredit.get('term')?.value.match(valoresAceptados) == null ||
-      this.formCredit.get('term')?.value.match(valoresAceptados) == null) {
-      this.errorForm = true;
+    const validValues = /^[0-9]+$/;
+    const amount:string = this.formCredit.get('amount')?.value;
+    const term:string = this.formCredit.get('term')?.value;
+    const interest:string = this.formCredit.get('interest')?.value;
+    if (String(amount).match(validValues) == null || 
+        String(term).match(validValues)  == null || 
+        String(interest).match(validValues)  == null) {
       return false;
     } else {
       return true;
@@ -124,6 +128,16 @@ export class AppComponent implements OnInit {
     this.formCredit.get('amount')?.setValue(credit.amount);
     this.formCredit.get('term')?.setValue(credit.term);
     this.formCredit.get('interest')?.setValue(credit.interest.toString());
+  }
+
+  timerAlerText(message:string){
+    this.alertTest = message;
+    this.alert = true;
+    setInterval(()=> this.alert = false ,6000);
+  }
+
+  errorAlert():boolean{
+    return this.typeAlerts.error == this.alertTest || this.typeAlerts.invalid == this.alertTest;
   }
 
 }

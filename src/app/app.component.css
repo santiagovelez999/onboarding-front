@@ -53,5 +53,10 @@ mat-form-field{
 
 .alert-invalid{
     color: red;
-    font-size: 15px;
+    font-size: 16px;
+}
+
+.alert-valid{
+    color:green;
+    font-size: 16px;
 }
