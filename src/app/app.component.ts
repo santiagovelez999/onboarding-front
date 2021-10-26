@@ -22,10 +22,10 @@ export class AppComponent implements OnInit {
   formCredit: FormGroup;
   alert: boolean = false;
   typeAlerts = {
-    invalid:"Los campos marcados son obligatorios.",
-    error:"Los campos tienen errores, por favor vilide."
+    invalid: "Los campos marcados son obligatorios.",
+    error: "Los campos tienen errores, por favor vilide."
   }
-  alertTest:string = '';
+  alertTest: string = '';
   idCredit: number = 0;
 
   constructor(protected creditService: CreditService, private formBuilder: FormBuilder) {
@@ -57,24 +57,55 @@ export class AppComponent implements OnInit {
     this.dataSource.sort = this.ordenar;
   }
 
+  // Metodo encargado de realizar la accion de actualizar o guardar
+  action() {
+    if (this.idCredit !== 0) {
+      this.upgrade();
+    } else {
+      this.save();
+    }
+  }
+
+  // Metodo encargado de actualizar la información
+  upgrade() {
+    if (this.validateform()) {
+      if (this.validateOnlyNumbers()) {
+        const dataToSend: CreditInterface = this.prepareShippingData(this.idCredit);
+        this.creditService.upgrade(dataToSend).subscribe(response => {
+          this.timerAlerText(response['200']);
+          this.cleanform();
+          this.listData();
+        }, error => {
+          this.timerAlerText(error['400']);
+        });
+      } else {
+        this.timerAlerText(this.typeAlerts.error);
+      }
+    } else {
+      this.timerAlerText(this.typeAlerts.invalid);
+      this.cleanform();
+    }
+  }
+
+
   // Metodo encargado de guardar la información
   save() {
     if (this.validateform()) {
       if (this.validateOnlyNumbers()) {
         const dataToSend: CreditInterface = this.prepareShippingData();
-        this.creditService.save(dataToSend).subscribe(respuesta => {
-          this.timerAlerText(respuesta['200']);
+        this.creditService.save(dataToSend).subscribe(response => {
+          this.timerAlerText(response['200']);
           this.cleanform();
           this.listData();
         }, error => {
           this.timerAlerText(error['400']);
         }
         );
-      }else{
+      } else {
         this.timerAlerText(this.typeAlerts.error);
       }
     } else {
-     this.timerAlerText(this.typeAlerts.invalid);
+      this.timerAlerText(this.typeAlerts.invalid);
       this.cleanform();
     }
   }
@@ -87,12 +118,12 @@ export class AppComponent implements OnInit {
   // Metodo encargado de validar si los campos numericos tienen caracteres especiales
   validateOnlyNumbers(): boolean {
     const validValues = /^[0-9]+$/;
-    const amount:string = this.formCredit.get('amount')?.value;
-    const term:string = this.formCredit.get('term')?.value;
-    const interest:string = this.formCredit.get('interest')?.value;
-    if (String(amount).match(validValues) == null || 
-        String(term).match(validValues)  == null || 
-        String(interest).match(validValues)  == null) {
+    const amount: string = this.formCredit.get('amount')?.value;
+    const term: string = this.formCredit.get('term')?.value;
+    const interest: string = this.formCredit.get('interest')?.value;
+    if (String(amount).match(validValues) == null ||
+      String(term).match(validValues) == null ||
+      String(interest).match(validValues) == null) {
       return false;
     } else {
       return true;
@@ -115,6 +146,7 @@ export class AppComponent implements OnInit {
 
   // Metodo encargado de limpiar todo el formulario
   cleanform() {
+    this.idCredit = 0;
     this.formCredit.get('name')?.setValue('');
     this.formCredit.get('amount')?.setValue('');
     this.formCredit.get('term')?.setValue('');
@@ -130,13 +162,13 @@ export class AppComponent implements OnInit {
     this.formCredit.get('interest')?.setValue(credit.interest.toString());
   }
 
-  timerAlerText(message:string){
+  timerAlerText(message: string) {
     this.alertTest = message;
     this.alert = true;
-    setInterval(()=> this.alert = false ,6000);
+    setInterval(() => this.alert = false, 6000);
   }
 
-  errorAlert():boolean{
+  errorAlert(): boolean {
     return this.typeAlerts.error == this.alertTest || this.typeAlerts.invalid == this.alertTest;
   }
 

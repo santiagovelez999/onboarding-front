@@ -21,7 +21,7 @@ export class CreditService {
     return this.http.post<any>(`${environment.endpoint}${this.nameEntity}`, suscripcion);
   }
 
-  public actualizar(suscripcion: CreditInterface) {
+  public upgrade(suscripcion: CreditInterface) {
     return this.http.put<any>(`${environment.endpoint}${this.nameEntity}`, suscripcion);
   }
 }

@@ -328,77 +328,71 @@
 </div>
 
 <div class="content" role="main">
-  <!--Formulario-->
-  <mat-card class="content-card">
-    <mat-card-header>
-      <mat-card-title class="titulo">Registro</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <form [formGroup]="formCredit">
-        <div fxLayout="column">
-          <div fxLayoutAlign="center center" class="container-alert">
-            <a *ngIf="alert" [ngClass]="{'alert-invalid': errorAlert(), 'alert-valid': !errorAlert()}">
-              {{alertTest}}
-            </a>
-          </div>
-          <div fxLayoutAlign="center center">
-            <mat-form-field appearance="legacy" class="agregar-ancho">
-              <mat-label>Nombre</mat-label>
-              <input id="_name" type="text" formControlName="name" matInput>
-            </mat-form-field>
-          </div>
-
-          <div fxLayoutAlign="center center">
-            <mat-form-field appearance="legacy" class="agregar-ancho">
-              <mat-label>Monto</mat-label>
-              <input id="_amount" type="text" formControlName="amount" matInput>
-            </mat-form-field>
-          </div>
-
-          <div fxLayoutAlign="center center">
-            <mat-form-field appearance="legacy" class="agregar-ancho">
-              <mat-label>Plazo</mat-label>
-              <input id="_term" type="text" formControlName="term" matInput>
-            </mat-form-field>
-          </div>
-
-          <div fxLayoutAlign="center center">
-            <mat-form-field appearance="legacy" class="agregar-ancho">
-              <mat-label>Interes</mat-label>
-              <mat-select id="_interest" formControlName="interest">
-                <mat-option value="0.85">0,85%</mat-option>
-                <mat-option value="1">1%</mat-option>
-                <mat-option value="1.25">1,25%</mat-option>
-                <mat-option value="2">2%</mat-option>
-                <mat-option value="2.4">2,4%</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-
-          <div fxLayoutAlign="center center">
-
-            <button class="button-properties" mat-raised-button color="primary" 
-            (click)="save();" aria-label="Guardar">Guardar
-              <mat-icon>check</mat-icon>
-            </button>
-            <button class="button-properties" mat-raised-button color="warn" aria-label="Cancelar">Cancelar
-              <mat-icon>close</mat-icon>
-            </button>
-
-          </div>
+  <div id="titleCredit">
+    <h2>CREDITOS</h2>
+  </div>
+  <div id="container-form">
+    <form [formGroup]="formCredit">
+      <div fxLayout="column">
+        <div fxLayoutAlign="center center" class="container-alert">
+          <a *ngIf="alert" [ngClass]="{'alert-invalid': errorAlert(), 'alert-valid': !errorAlert()}">
+            {{alertTest}}
+          </a>
         </div>
-      </form>
-    </mat-card-content>
-  </mat-card>
+        <div fxLayoutAlign="center center">
+          <mat-form-field appearance="legacy" class="agregar-ancho">
+            <mat-label>Nombre*:</mat-label>
+            <input id="_name" type="text" formControlName="name" matInput>
+          </mat-form-field>
+        </div>
+
+        <div fxLayoutAlign="center center">
+          <mat-form-field appearance="legacy" class="agregar-ancho">
+            <mat-label>Monto*:</mat-label>
+            <input id="_amount" type="text" formControlName="amount" matInput>
+          </mat-form-field>
+        </div>
+
+        <div fxLayoutAlign="center center">
+          <mat-form-field appearance="legacy" class="agregar-ancho">
+            <mat-label>Plazo*:</mat-label>
+            <input id="_term" type="text" formControlName="term" matInput>
+          </mat-form-field>
+        </div>
+
+        <div fxLayoutAlign="center center">
+          <mat-form-field appearance="legacy" class="agregar-ancho">
+            <mat-label>Interes*:</mat-label>
+            <mat-select id="_interest" formControlName="interest">
+              <mat-option value="0.85">0,85%</mat-option>
+              <mat-option value="1">1%</mat-option>
+              <mat-option value="1.25">1,25%</mat-option>
+              <mat-option value="2">2%</mat-option>
+              <mat-option value="2.4">2,4%</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div fxLayoutAlign="center center">
+          <button id="_saveButton" class="button-properties" mat-raised-button color="primary" (click)="action();"
+            aria-label="Guardar">Guardar
+            <mat-icon>check</mat-icon>
+          </button>
+          <button id="_cancelButton" class="button-properties" mat-raised-button color="warn" aria-label="Cancelar"
+            (click)="cleanform();">Cancelar
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
   <!--Tabla-->
   <div id="containerCredit">
-    <div id="titleCredit">
-      <h2>CREDITOS</h2>
-    </div>
     <mat-card>
       <mat-card-header>
         <mat-card-title>
-          <button mat-stroked-button color="primary" aria-label="Nuevo">Recargar
+          <button mat-mini-fab  color="primary" aria-label="Cargar" 
+          (click)="listData();">
             <mat-icon>change_circle</mat-icon>
           </button>
         </mat-card-title>
@@ -426,7 +420,7 @@
               <td mat-cell *matCellDef="let element">
                 <div>
                   <button mat-mini-fab color="primary" aria-label="Editar información"
-                  (click)="precargarDatosEnFormulario(element)">
+                    (click)="precargarDatosEnFormulario(element)">
                     <mat-icon>mode_edit</mat-icon>
                   </button>
                 </div>
