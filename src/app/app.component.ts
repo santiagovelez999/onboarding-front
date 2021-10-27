@@ -76,6 +76,7 @@ export class AppComponent implements OnInit {
           this.cleanform();
           this.listData();
         }, error => {
+          this.cleanform();
           this.timerAlerText(error['400']);
         });
       } else {
@@ -83,7 +84,6 @@ export class AppComponent implements OnInit {
       }
     } else {
       this.timerAlerText(this.typeAlerts.invalid);
-      this.cleanform();
     }
   }
 
@@ -120,10 +120,8 @@ export class AppComponent implements OnInit {
     const validValues = /^[0-9]+$/;
     const amount: string = this.formCredit.get('amount')?.value;
     const term: string = this.formCredit.get('term')?.value;
-    const interest: string = this.formCredit.get('interest')?.value;
     if (String(amount).match(validValues) == null ||
-      String(term).match(validValues) == null ||
-      String(interest).match(validValues) == null) {
+      String(term).match(validValues) == null) {
       return false;
     } else {
       return true;
