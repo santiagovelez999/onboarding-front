@@ -1,0 +1,235 @@
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
+<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
+<!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * Delete the template below * * * * * * * * * * -->
+<!-- * * * * * * * to get started with your project! * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+
+<style>
+    :host {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        font-size: 14px;
+        color: #333;
+        box-sizing: border-box;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin: 8px 0;
+    }
+
+    p {
+        margin: 0;
+    }
+
+    .spacer {
+        flex: 1;
+        text-align: end;
+    }
+
+    .toolbar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        background-color: #1976d2;
+        color: white;
+        font-weight: 600;
+    }
+
+    .toolbar img {
+        margin: 0 16px;
+    }
+
+    .toolbar #twitter-logo {
+        height: 40px;
+        margin: 0 8px;
+    }
+
+    .toolbar #youtube-logo {
+        height: 40px;
+        margin: 0 16px;
+    }
+
+    .toolbar #twitter-logo:hover,
+    .toolbar #youtube-logo:hover {
+        opacity: 0.8;
+    }
+
+    .content {
+        display: flex;
+        margin: 82px auto 32px;
+        padding: 0 16px;
+        max-width: 960px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+
+
+
+    /* Responsive Styles */
+    @media screen and (max-width: 767px) {
+
+        .card-container>*:not(.circle-link),
+        .terminal {
+            width: 100%;
+        }
+
+        .card:not(.highlight-card) {
+            height: 16px;
+            margin: 8px 0;
+        }
+
+        .card.highlight-card span {
+            margin-left: 72px;
+        }
+
+        svg#rocket-smoke {
+            right: 120px;
+            transform: rotate(-5deg);
+        }
+    }
+
+    @media screen and (max-width: 575px) {
+        svg#rocket-smoke {
+            display: none;
+            visibility: hidden;
+        }
+    }
+</style>
+
+<!-- Toolbar -->
+<div class="toolbar" role="banner">
+    <img width="40" alt="Angular Logo"
+        src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==" />
+    <span>Welcome</span>
+    <div class="spacer">
+        <button mat-raised-button color="warn" type="submit" routerLink="/login">
+            Salir</button>
+    </div>
+
+
+</div>
+
+<div class="content" role="main">
+    <div id="titleCredit">
+        <h2>CREDITOS</h2>
+    </div>
+    <div id="container-form">
+        <form [formGroup]="formCredit">
+            <div fxLayout="column">
+                <div fxLayoutAlign="center center" class="container-alert">
+                    <a *ngIf="alert" [ngClass]="{'alert-invalid': errorAlert(), 'alert-valid': !errorAlert()}">
+                        {{alertTest}}
+                    </a>
+                </div>
+                <div fxLayoutAlign="center center">
+                    <mat-form-field appearance="legacy" class="agregar-ancho">
+                        <mat-label>Nombre*:</mat-label>
+                        <input id="_name" type="text" formControlName="name" matInput>
+                    </mat-form-field>
+                </div>
+
+                <div fxLayoutAlign="center center">
+                    <mat-form-field appearance="legacy" class="agregar-ancho">
+                        <mat-label>Monto*:</mat-label>
+                        <input id="_amount" type="text" formControlName="amount" matInput>
+                    </mat-form-field>
+                </div>
+
+                <div fxLayoutAlign="center center">
+                    <mat-form-field appearance="legacy" class="agregar-ancho">
+                        <mat-label>Plazo*:</mat-label>
+                        <input id="_term" type="text" formControlName="term" matInput>
+                    </mat-form-field>
+                </div>
+
+                <div fxLayoutAlign="center center">
+                    <mat-form-field appearance="legacy" class="agregar-ancho">
+                        <mat-label>Interes*:</mat-label>
+                        <mat-select id="_interest" formControlName="interest">
+                            <mat-option value="0.85">0,85%</mat-option>
+                            <mat-option value="1">1%</mat-option>
+                            <mat-option value="1.25">1,25%</mat-option>
+                            <mat-option value="2">2%</mat-option>
+                            <mat-option value="2.4">2,4%</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div fxLayoutAlign="center center">
+                    <button id="_saveButton" class="button-properties" mat-raised-button color="primary"
+                        (click)="action();" aria-label="Guardar">Guardar
+                        <mat-icon>check</mat-icon>
+                    </button>
+                    <button id="_cancelButton" class="button-properties" mat-raised-button color="warn"
+                        aria-label="Cancelar" (click)="cleanform();">Cancelar
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!--Tabla-->
+    <div id="containerCredit">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>
+                    <button mat-mini-fab color="primary" aria-label="Cargar" (click)="listData();">
+                        <mat-icon>change_circle</mat-icon>
+                    </button>
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div id="containerTableCredit">
+                    <table mat-table [dataSource]="dataSource " class="mat-elevation-z8" matSort>
+                        <ng-container matColumnDef="id">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> IDENTIFICADOR </th>
+                            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="name">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> NOMBRE </th>
+                            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="value">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> VALOR </th>
+                            <td mat-cell *matCellDef="let element"> {{element.amount | currency: 'COL'}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="option">
+                            <th mat-header-cell *matHeaderCellDef> OPCIÓN </th>
+                            <td mat-cell *matCellDef="let element">
+                                <div>
+                                    <button mat-mini-fab color="primary" aria-label="Editar información"
+                                        (click)="precargarDatosEnFormulario(element)">
+                                        <mat-icon>mode_edit</mat-icon>
+                                    </button>
+                                </div>
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                    <mat-paginator [pageSizeOptions]="[5, 10]" aria-label="Select page of users"></mat-paginator>
+                    <div *ngIf="dataSource === null">
+                        <p>No se encontraron registros...</p>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

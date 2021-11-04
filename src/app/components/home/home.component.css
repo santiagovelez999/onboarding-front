@@ -1,0 +1,78 @@
+table {
+    width: 100%;
+}
+
+table th {
+    text-align: center;
+    word-wrap:break-word;
+}
+
+table td{
+   text-align: center;
+   word-wrap:break-word;
+}
+
+#containerCredit{
+    margin-top: 50px;
+    margin-bottom: 50px;
+    width: 60%;
+}
+
+
+#containerTableCredit{
+   overflow: hidden;
+}
+
+button{
+    margin: 5px;
+}
+
+#titleCredit{
+    background-color: #106cc8;
+    color: white;
+    padding: 10px;
+    width: 60%;
+    text-align: center;
+}
+
+#container-form{
+    width: 60%;
+}
+
+.content-card{
+    width: 50%;
+}
+
+mat-form-field{
+    width: 100%;
+}
+
+.button-properties{
+    display: inline-block;
+    margin: 5px;
+    width: 40%;
+}
+
+
+.container-alert{
+    text-align: center;
+    margin: 15px;
+}
+
+.alert-invalid{
+    color: red;
+    font-size: 16px;
+}
+
+.alert-valid{
+    color:green;
+    font-size: 16px;
+}
+
+#_saveButton{
+    float: left;
+}
+
+#_cancelButton{
+    float: right;
+}

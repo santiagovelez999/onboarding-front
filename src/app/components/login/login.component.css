@@ -1,0 +1,31 @@
+.father {
+    background-color: #ffffff;
+    margin: 1rem;
+    padding: 1rem;
+    border: 2px solid rgb(231, 116, 116);
+    /* IMPORTANTE */
+    text-align: center;
+  }
+
+  .icon-google{
+      background: white;
+      color: red;
+      font-size: 20px;
+      padding-left: 5px;
+      padding-right: 5px;
+      border-radius: 100%;
+  }
+
+
+  .icon-facebook{
+    background: white;
+    color: rgb(0, 46, 196);
+    font-size: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 100%;
+}
+
+button {
+    margin: 10px 10px !important;
+}
