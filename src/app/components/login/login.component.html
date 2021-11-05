@@ -3,12 +3,9 @@
         <mat-card-title>Login</mat-card-title>
         <mat-card-subtitle>Ingresar al sistema</mat-card-subtitle>
         <mat-card-actions>
-            <button mat-raised-button color="warn" type="submit">
+            <button mat-raised-button color="warn" type="submit" (click)="signInWithGoogle()">
                 <span class="icon-google">G</span>
-                Ingresar con google</button>
-            <button mat-raised-button color="primary" type="submit" routerLink="/home">
-                <span class="icon-facebook">F</span>
-                Ingresar con facebook</button>
+                Ingresar con Google</button>
         </mat-card-actions>
     </mat-card>
 </div>

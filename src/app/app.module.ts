@@ -24,6 +24,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import {
+  GoogleLoginProvider,
   FacebookLoginProvider
 } from 'angularx-social-login';
 
@@ -66,8 +67,10 @@ import { HomeComponent } from './components/home/home.component';
         autoLogin: false,
         providers: [
           {
-            id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider('1579652269043980')
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '550081923016-kjp33f86bq8pk7nqfl5mbeso0jnk3ok0.apps.googleusercontent.com'
+            )
           }
         ]
       } as SocialAuthServiceConfig,

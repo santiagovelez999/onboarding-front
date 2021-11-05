@@ -3,6 +3,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
+import { SocialAuthService, SocialUser } from 'angularx-social-login';
 import { Credit } from '../model/credit';
 import { CreditInterface } from '../model/creditinterface';
 import { CreditService } from '../service/credit.service';
@@ -30,7 +32,13 @@ export class HomeComponent implements OnInit {
   alertTest: string = '';
   idCredit: number = 0;
 
-  constructor(protected creditService: CreditService, private formBuilder: FormBuilder) {
+  userLogged?:SocialUser;
+  isLogued?:boolean;
+
+  constructor(protected creditService: CreditService, 
+              private formBuilder: FormBuilder,
+              private authService: SocialAuthService, 
+              private router:Router) {
     this.formCredit = this.formBuilder.group({
       name: new FormControl('', Validators.required),
       amount: new FormControl('', Validators.required),
@@ -40,6 +48,12 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.authService.authState.subscribe(
+      data=>{
+        this.userLogged = data;
+        this.isLogued = this.userLogged != null;
+      }
+    );
     this.listData();
   }
 
@@ -171,5 +185,11 @@ export class HomeComponent implements OnInit {
   errorAlert(): boolean {
     return this.typeAlerts.error == this.alertTest || this.typeAlerts.invalid == this.alertTest;
   }
+
+  logOut(){
+    this.authService.signOut();
+    this.router.navigate(['/login']);
+  }
+
 
 }
