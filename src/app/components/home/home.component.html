@@ -145,27 +145,40 @@
                 <div fxLayoutAlign="center center">
                     <mat-form-field appearance="legacy" class="agregar-ancho">
                         <mat-label>Monto*:</mat-label>
-                        <input id="_amount" type="text" formControlName="amount" matInput>
+                        <input id="_amount" type="text" formControlName="amount" matInput (change)="calculate();">
                     </mat-form-field>
                 </div>
 
                 <div fxLayoutAlign="center center">
                     <mat-form-field appearance="legacy" class="agregar-ancho">
                         <mat-label>Plazo*:</mat-label>
-                        <input id="_term" type="text" formControlName="term" matInput>
+                        <input id="_term" type="text" formControlName="term" matInput (change)="calculate();">
                     </mat-form-field>
                 </div>
 
                 <div fxLayoutAlign="center center">
                     <mat-form-field appearance="legacy" class="agregar-ancho">
                         <mat-label>Interes*:</mat-label>
-                        <mat-select id="_interest" formControlName="interest">
+                        <mat-select id="_interest" formControlName="interest" (selectionChange)="calculate();">
                             <mat-option value="0.85">0,85%</mat-option>
                             <mat-option value="1">1%</mat-option>
                             <mat-option value="1.25">1,25%</mat-option>
                             <mat-option value="2">2%</mat-option>
                             <mat-option value="2.4">2,4%</mat-option>
                         </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div fxLayoutAlign="center center">
+                    <mat-form-field appearance="legacy" class="agregar-ancho">
+                        <mat-label>Cuota Mensula*:</mat-label>
+                        <input id="_monthlyFeeFormat" type="text" formControlName="monthlyFeeFormat" matInput>
+                    </mat-form-field>
+                </div>
+
+                <div fxLayoutAlign="center center" *ngIf="false">
+                    <mat-form-field appearance="legacy" class="agregar-ancho">
+                        <input id="_monthlyFee" type="text" formControlName="monthlyFee" matInput>
                     </mat-form-field>
                 </div>
 
@@ -179,6 +192,7 @@
                         <mat-icon>close</mat-icon>
                     </button>
                 </div>
+
             </div>
         </form>
     </div>

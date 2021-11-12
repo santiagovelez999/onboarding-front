@@ -4,4 +4,5 @@ export interface CreditInterface {
     amount: number;
     term: number;
     interest: number;
+    monthlyFee: number;
 }

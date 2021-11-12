@@ -5,6 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
+import { CalculateInterface } from '../model/calculateinterface';
 import { Credit } from '../model/credit';
 import { CreditInterface } from '../model/creditinterface';
 import { CreditService } from '../service/credit.service';
@@ -32,24 +33,27 @@ export class HomeComponent implements OnInit {
   alertTest: string = '';
   idCredit: number = 0;
 
-  userLogged?:SocialUser;
-  isLogued?:boolean;
+  userLogged?: SocialUser;
+  isLogued?: boolean;
 
-  constructor(protected creditService: CreditService, 
-              private formBuilder: FormBuilder,
-              private authService: SocialAuthService, 
-              private router:Router) {
+  constructor(protected creditService: CreditService,
+    private formBuilder: FormBuilder,
+    private authService: SocialAuthService,
+    private router: Router) {
     this.formCredit = this.formBuilder.group({
       name: new FormControl('', Validators.required),
       amount: new FormControl('', Validators.required),
       term: new FormControl('', Validators.required),
-      interest: new FormControl('', Validators.required)
+      interest: new FormControl('', Validators.required),
+      monthlyFeeFormat: new FormControl(''),
+      monthlyFee: new FormControl('', Validators.required)
+      
     });
   }
 
   ngOnInit(): void {
     this.authService.authState.subscribe(
-      data=>{
+      data => {
         this.userLogged = data;
         this.isLogued = this.userLogged != null;
       }
@@ -75,6 +79,7 @@ export class HomeComponent implements OnInit {
 
   // Metodo encargado de realizar la accion de actualizar o guardar
   action() {
+    this.lockFields(false);
     if (this.idCredit !== 0) {
       this.upgrade();
     } else {
@@ -150,7 +155,8 @@ export class HomeComponent implements OnInit {
       name: this.formCredit.get('name')?.value,
       amount: this.formCredit.get('amount')?.value,
       term: this.formCredit.get('term')?.value,
-      interest: this.formCredit.get('interest')?.value
+      interest: this.formCredit.get('interest')?.value,
+      monthlyFee: this.formCredit.get('monthlyFee')?.value
     };
     if (idSuscripcion !== 0) {
       datosAEnviar.id = this.idCredit;
@@ -160,20 +166,29 @@ export class HomeComponent implements OnInit {
 
   // Metodo encargado de limpiar todo el formulario
   cleanform() {
+    this.lockFields(false);
     this.idCredit = 0;
     this.formCredit.get('name')?.setValue('');
     this.formCredit.get('amount')?.setValue('');
     this.formCredit.get('term')?.setValue('');
     this.formCredit.get('interest')?.setValue('');
+    this.formCredit.get('monthlyFee')?.setValue('');
+    this.formCredit.get('monthlyFeeFormat')?.setValue('');
+    
   }
 
   // Metodo encargado de cargar datos cuanto la opcion es actualizar
   precargarDatosEnFormulario(credit: Credit) {
+    this.lockFields(true);
     this.idCredit = credit.id;
     this.formCredit.get('name')?.setValue(credit.name);
     this.formCredit.get('amount')?.setValue(credit.amount);
     this.formCredit.get('term')?.setValue(credit.term);
     this.formCredit.get('interest')?.setValue(credit.interest.toString());
+    this.formCredit.get('monthlyFee')?.setValue(credit.monthlyFee);
+    this.formCredit.get('monthlyFeeFormat')?.setValue(
+      this.formatCurrency("es-CO", "COP", 2, credit.monthlyFee)
+    );
   }
 
   timerAlerText(message: string) {
@@ -186,9 +201,51 @@ export class HomeComponent implements OnInit {
     return this.typeAlerts.error == this.alertTest || this.typeAlerts.invalid == this.alertTest;
   }
 
-  logOut(){
+  logOut() {
     this.authService.signOut();
     this.router.navigate(['/login']);
+  }
+
+
+  // Metodo encargado de guardar la información
+  calculate() {
+    const amount = this.formCredit.get('amount')?.value;
+    const term = this.formCredit.get('term')?.value;
+    const interest = this.formCredit.get('interest')?.value;
+    const calculateInterface: CalculateInterface = {
+      amount: amount != '' ? +amount : 0,
+      term: term != '' ? +term : 0,
+      interest: interest != '' ? +interest : 0.0
+    }
+    this.creditService.calculate(calculateInterface).subscribe(response => {
+      let calculate = this.formatCurrency("es-CO", "COP", 2, response['200']);
+      this.formCredit.get('monthlyFee')?.setValue(response['200']);
+      this.formCredit.get('monthlyFeeFormat')?.setValue(calculate);
+    }, error => {
+      this.timerAlerText(error['400']);
+    }
+    );
+  }
+
+  lockFields(option: boolean) {
+    if (option) {
+      this.formCredit.get('name')?.disable();
+      this.formCredit.get('amount')?.disable();
+    } else {
+
+      this.formCredit.get('name')?.enable();
+      this.formCredit.get('amount')?.enable();
+    }
+  }
+
+
+  formatCurrency(locales: any, currency: any, fractionDigits: any, number: any) {
+    var formatted = new Intl.NumberFormat(locales, {
+      style: 'currency',
+      currency: currency,
+      minimumFractionDigits: fractionDigits
+    }).format(number);
+    return formatted;
   }
 
 
